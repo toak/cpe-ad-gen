@@ -1,51 +1,78 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>CPE Ad Generator</title>
+    <meta charset="utf-8">
+    <title>CPE Ad Generator</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
 </head>
 <body>
-<select id="template-dropdown" name="template">
-<select id="language-dropdown" name="language">
-<select id="channel-dropdown" name="channel">
-
-</select>
+    <center>
+        <p>
+            <select id="template-dropdown" name="template"></select>
+            <select id="language-dropdown" name="language"></select>
+            <select id="channel-dropdown" name="channel"></select>
+            Hello-Code: <input id="hello"></input>
+            <button id="generate">Generate</button>
+        </p>
+        <p><img id="show" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/1x1_placeholder.png" height="400"></p>
+        <p><a id="download" href="">Download</a></p>
+    </center>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
-const url_t = 'https://ad.cde.toak.de/?get=t';
-const url_l = 'https://ad.cde.toak.de/?get=l';
-const url_c = 'https://ad.cde.toak.de/?get=c';
+    var url = '';
+    let dropdown_t = $('#template-dropdown');
+    let dropdown_l = $('#language-dropdown');
+    let dropdown_c = $('#channel-dropdown');
+    const url_t = 'https://ad.cde.toak.de/?get=t';
+    const url_l = 'https://ad.cde.toak.de/?get=l';
+    const url_c = 'https://ad.cde.toak.de/?get=c';
 
-let dropdown_t = $('#template-dropdown');
-dropdown_t.empty();
-dropdown_t.append('<option selected="true" disabled>Choose Background</option>');
-dropdown_t.prop('selectedIndex', 0);
-$.getJSON(url_t, function (data) {
-  $.each(data, function (key, entry) {
-    dropdown_t.append($('<option></option>').attr('value', entry.id).text(entry.name));
-  })
-});
+    $(document).ready(function(){
+        dropdown_t.val(1);
+        $("#generate").click(function(){
+            if(!dropdown_t.val() || !dropdown_l.val() || !dropdown_c.val()) {
+                alert("Please fill all select boxes!");
+            } else {
+                $("#generate").html("Please wait");
+                url = 'https://ad.cde.toak.de/?t=' + dropdown_t.val() + '&l=' + dropdown_l.val() + '&ch=' + dropdown_c.val() + '&c=' + $("#hello").val();
+                let ad = $('#show');
+                ad.attr('src', url);
+                let ad_dl = $('#download');
+                ad_dl.attr('href', url+'&d=1');
+            }
+        });
+    });
+    
+    $( "#show" ).on("load", function() {
+        $("#generate").html("Generate");
+    });
+    
+    dropdown_t.empty();
+    dropdown_t.append('<option selected="true" disabled>Choose Background</option>');
+    dropdown_t.prop('selectedIndex', 0);
+    $.getJSON(url_t, function (data) {
+        $.each(data, function (key, entry) {
+            dropdown_t.append($('<option></option>').attr('value', entry.id).text(entry.name));
+        })
+    });
 
-let dropdown_l = $('#language-dropdown');
-dropdown_l.empty();
-dropdown_l.append('<option selected="true" disabled>Choose Language</option>');
-dropdown_l.prop('selectedIndex', 0);
-$.getJSON(url_l, function (data) {
-  $.each(data, function (key, entry) {
-    dropdown_l.append($('<option></option>').attr('value', entry.short).text(entry.name));
-  })
-});
+    dropdown_l.empty();
+    dropdown_l.append('<option selected="true" disabled>Choose Language</option>');
+    dropdown_l.prop('selectedIndex', 0);
+    $.getJSON(url_l, function (data) {
+        $.each(data, function (key, entry) {
+            dropdown_l.append($('<option></option>').attr('value', entry.short).text(entry.name));
+        })
+    });
 
-let dropdown_c = $('#channel-dropdown');
-dropdown_c.empty();
-dropdown_c.append('<option selected="true" disabled>Choose Channel</option>');
-dropdown_c.prop('selectedIndex', 0);
-$.getJSON(url_c, function (data) {
-  $.each(data, function (key, entry) {
-    dropdown_c.append($('<option></option>').attr('value', entry.channel).text(entry.name));
-  })
-});
-  
+    dropdown_c.empty();
+    dropdown_c.append('<option selected="true" disabled>Choose Channel</option>');
+    dropdown_c.prop('selectedIndex', 0);
+    $.getJSON(url_c, function (data) {
+        $.each(data, function (key, entry) {
+            dropdown_c.append($('<option></option>').attr('value', entry.channel).text(entry.name));
+        })
+    });
 </script>
 </body>
 </html>
