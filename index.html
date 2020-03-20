@@ -5,25 +5,47 @@
 <title>CPE Ad Generator</title>
 </head>
 <body>
-<select id="language-dropdown" name="locality">
+<select id="template-dropdown" name="template">
+<select id="language-dropdown" name="language">
+<select id="channel-dropdown" name="channel">
+
 </select>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
-let dropdown = $('#language-dropdown');
+const url_t = 'https://ad.cde.toak.de/?get=t';
+const url_l = 'https://ad.cde.toak.de/?get=l';
+const url_c = 'https://ad.cde.toak.de/?get=c';
 
-dropdown.empty();
-
-dropdown.append('<option selected="true" disabled>Choose Language</option>');
-dropdown.prop('selectedIndex', 0);
-
-const url = 'https://ad.cde.toak.de/?get=l';
-
-// Populate dropdown with list of provinces
-$.getJSON(url, function (data) {
+let dropdown_t = $('#template-dropdown');
+dropdown_t.empty();
+dropdown_t.append('<option selected="true" disabled>Choose Background</option>');
+dropdown_t.prop('selectedIndex', 0);
+$.getJSON(url_t, function (data) {
   $.each(data, function (key, entry) {
-    dropdown.append($('<option></option>').attr('value', entry.short).text(entry.name));
+    dropdown_t.append($('<option></option>').attr('value', entry.id).text(entry.name));
   })
 });
+
+let dropdown_l = $('#language-dropdown');
+dropdown_l.empty();
+dropdown_l.append('<option selected="true" disabled>Choose Language</option>');
+dropdown_l.prop('selectedIndex', 0);
+$.getJSON(url_l, function (data) {
+  $.each(data, function (key, entry) {
+    dropdown_l.append($('<option></option>').attr('value', entry.short).text(entry.name));
+  })
+});
+
+let dropdown_c = $('#channel-dropdown');
+dropdown_c.empty();
+dropdown_c.append('<option selected="true" disabled>Choose Language</option>');
+dropdown_c.prop('selectedIndex', 0);
+$.getJSON(url_c, function (data) {
+  $.each(data, function (key, entry) {
+    dropdown_c.append($('<option></option>').attr('value', entry.channel).text(entry.name));
+  })
+});
+  
 </script>
 </body>
 </html>
