@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CPE Ad Generator</title>
+</head>
+<body>
+<select id="language-dropdown" name="locality">
+</select>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+let dropdown = $('#language-dropdown');
+
+dropdown.empty();
+
+dropdown.append('<option selected="true" disabled>Choose Language</option>');
+dropdown.prop('selectedIndex', 0);
+
+const url = 'https://ad.cde.toak.de/?get=l';
+
+// Populate dropdown with list of provinces
+$.getJSON(url, function (data) {
+  $.each(data, function (key, entry) {
+    dropdown.append($('<option></option>').attr('value', entry.short).text(entry.name));
+  })
+});
+</script>
+</body>
+</html>
