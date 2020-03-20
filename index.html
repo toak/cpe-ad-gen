@@ -38,7 +38,7 @@ $.getJSON(url_l, function (data) {
 
 let dropdown_c = $('#channel-dropdown');
 dropdown_c.empty();
-dropdown_c.append('<option selected="true" disabled>Choose Language</option>');
+dropdown_c.append('<option selected="true" disabled>Choose Channel</option>');
 dropdown_c.prop('selectedIndex', 0);
 $.getJSON(url_c, function (data) {
   $.each(data, function (key, entry) {
