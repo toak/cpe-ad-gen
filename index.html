@@ -50,7 +50,7 @@
     
     $( "#language-dropdown" ).on("change", function() {
         $.getJSON(url_t, function (data) {
-            $("#hello").text(data);
+            $("#hello").text(data.toString());
         });
     });
     
