@@ -26,6 +26,7 @@
     const url_t = 'https://ad.cde.toak.de/?get=t';
     const url_l = 'https://ad.cde.toak.de/?get=l';
     const url_c = 'https://ad.cde.toak.de/?get=c';
+    const url_h = 'https://ad.cde.toak.de/?get=h&l=';
 
     $(document).ready(function(){
         dropdown_t.val(1);
@@ -49,8 +50,8 @@
     });
     
     $( "#language-dropdown" ).on("change", function() {
-        $.getJSON(url_t, function (data) {
-            $("#hello").text(data.toString());
+        $.get(url_h + dropdown_l.val(), function (data) {
+            $("#hello").text(data);
         });
     });
     
