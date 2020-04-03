@@ -11,7 +11,7 @@
             <select id="template-dropdown" name="template"></select>
             <select id="language-dropdown" name="language"></select>
             <select id="channel-dropdown" name="channel"></select>
-            HelloCode <input id="hello" placeholder="hello123"></input>
+            Signup-Code: <span id="hello"></span> <input id="code" size=3 placeholder="123"></input>
             <button id="generate">Generate</button>
         </p>
         <p><img id="show" src="https://ad.cde.toak.de" height="400"></p>
@@ -29,22 +29,29 @@
 
     $(document).ready(function(){
         dropdown_t.val(1);
-        $("#generate").click(function(){
-            if(!dropdown_t.val() || !dropdown_l.val() || !dropdown_c.val()) {
-                alert("Please fill all select boxes!");
-            } else {
-                $("#generate").html("Please wait");
-                url = 'https://ad.cde.toak.de/?t=' + dropdown_t.val() + '&l=' + dropdown_l.val() + '&ch=' + dropdown_c.val() + '&c=' + $("#hello").val();
-                let ad = $('#show');
-                ad.attr('src', url);
-                let ad_dl = $('#download');
-                ad_dl.attr('href', url+'&d=1');
-            }
-        });
+    });
+
+    $("#generate").click(function(){
+        if(!dropdown_t.val() || !dropdown_l.val() || !dropdown_c.val()) {
+            alert("Please fill all select boxes!");
+        } else {
+            $("#generate").html("Please wait");
+            url = 'https://ad.cde.toak.de/?t=' + dropdown_t.val() + '&l=' + dropdown_l.val() + '&ch=' + dropdown_c.val() + '&c=' + $("#hello").text() + $("#code").val();
+            let ad = $('#show');
+            ad.attr('src', url);
+            let ad_dl = $('#download');
+            ad_dl.attr('href', url+'&d=1');
+        }
     });
     
     $( "#show" ).on("load", function() {
         $("#generate").html("Generate");
+    });
+    
+    $( "#language-dropdown" ).on("change", function() {
+        $.getJSON(url_t, function (data) {
+            $("#hello").text(data);
+        });
     });
     
     dropdown_t.empty();
